@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWANKY_FLOWERS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans', sans-serif;
+            background-color: #f5f5f5;
+            color: #2c2825;
+            line-height: 1.4;
+        }
+
+        /* Навигация */
+        .nav {
+            background-color: white;
+            position: relative;
+        }
+
+        .nav::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background-color: #595959;
+            pointer-events: none;
+        }
+
+        .nav-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            position: relative;
+            width: 100%;
+        }
+
+        .logo {
+            font-family: 'Caprasimo', 'Noto Sans', sans-serif;
+            font-size: 15px;
+            color: #2c2825;
+            text-decoration: none;
+            letter-spacing: -0.45px;
+            white-space: pre;
+            line-height: 0.8;
+        }
+
+        .nav-items {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            font-family: 'Outfit', 'Noto Sans', sans-serif;
+            font-weight: bold;
+            font-size: 14px;
+            color: #2c2825;
+            text-transform: uppercase;
+            letter-spacing: 0.28px;
+            white-space: nowrap;
+        }
+
+        .nav-items a {
+            color: #2c2825;
+            text-decoration: none;
+            line-height: 1.4;
+        }
+
+        .nav-items a.contact {
+            text-decoration: underline;
+            text-underline-position: from-font;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hamburger-line {
+            height: 2px;
+            width: 100%;
+            background-color: #2c2825;
+            border-radius: 1px;
+            transition: all 0.3s ease;
+        }
+
+        /* Мобильная навигация */
+        .nav-mobile {
+            background-color: white;
+            position: relative;
+            width: 100%;
+        }
+
+        .nav-mobile::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background-color: #595959;
+            pointer-events: none;
+        }
+
+        .nav-mobile-content {
+            display: flex;
+            flex-direction: column;
+            gap: 81px;
+            align-items: flex-start;
+            padding: 20px 16px;
+            width: 100%;
+        }
+
+        .mobile-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .mobile-logo {
+            font-family: 'Caprasimo', sans-serif;
+            font-size: 15px;
+            color: #2c2825;
+            letter-spacing: -0.45px;
+            line-height: 0.8;
+            width: 173px;
+        }
+
+        .mobile-hamburger {
+            width: 30px;
+            height: 30px;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .hamburger-line-mobile {
+            position: absolute;
+            height: 2px;
+            width: 75%;
+            background-color: #000;
+            left: 12.5%;
+            transform-origin: center;
+        }
+
+        .hamburger-line-mobile:nth-child(1) {
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .hamburger-line-mobile:nth-child(2) {
+            top: 25%;
+        }
+
+        .hamburger-line-mobile:nth-child(3) {
+            bottom: 25%;
+        }
+
+        /* Основной контент */
+        main {
+            width: 100%;
+            padding: 40px 20px;
+        }
+
+        .section-title {
+            font-family: 'Outfit', 'Noto Sans', sans-serif;
+            font-weight: bold;
+            font-size: 14px;
+            color: #575757;
+            text-transform: uppercase;
+            letter-spacing: 0.28px;
+            margin-bottom: 40px;
+        }
+
+        /* Галерея продуктов */
+        .gallery {
+            margin-bottom: 100px;
+        }
+
+        .gallery-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-item {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .product-info {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            font-family: 'Outfit', sans-serif;
+            font-weight: bold;
+            font-size: 18px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .product-name {
+            color: #2c2825;
+        }
+
+        .product-price {
+            color: rgba(0, 0, 0, 0.6);
+            font-size: 15px;
+            letter-spacing: -0.375px;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 269px;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-button {
+            background-color: #ffc800;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            padding: 8px 12px 6px;
+            border-radius: 4px;
+            text-decoration: none;
+            width: fit-content;
+        }
+
+        .dot {
+            width: 4px;
+            height: 4px;
+            background-color: #2c2825;
+            border-radius: 50%;
+        }
+
+        .button-text {
+            font-family: 'Outfit', 'Noto Sans', sans-serif;
+            font-weight: bold;
+            font-size: 14px;
+            color: #2c2825;
+            text-transform: uppercase;
+            letter-spacing: 0.28px;
+            white-space: nowrap;
+            text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Секции услуг */
+        .services {
+            margin-bottom: 100px;
+        }
+
+        .services-content {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .service-module {
+            display: flex;
+            gap: 20px;
+            padding: 30px 0;
+            position: relative;
+        }
+
+        .service-module::before {
+            content: '';
+            position: absolute;
+            top: -0.5px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background-color: #595959;
+        }
+
+        .service-text {
+            flex: 1;
+            max-width: 500px;
+        }
+
+        .service-text h3 {
+            font-family: 'Outfit', 'Noto Sans', sans-serif;
+            font-weight: bold;
+            font-size: 50px;
+            color: #171615;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            line-height: 1.4;
+        }
+
+        .service-image {
+            flex: 1;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+
+        .service-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Секция "Попробуйте" */
+        .try-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+            padding: 150px 0;
+            text-align: center;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .try-section h2 {
+            font-family: 'Outfit', 'Noto Sans', sans-serif;
+            font-weight: bold;
+            font-size: 14px;
+            color: #575757;
+            text-transform: uppercase;
+            letter-spacing: 0.28px;
+            white-space: pre;
+        }
+
+        .try-section h3 {
+            font-family: 'Outfit', 'Noto Sans', sans-serif;
+            font-weight: bold;
+            font-size: 40px;
+            color: #171615;
+            letter-spacing: -1px;
+            line-height: 1.1;
+        }
+
+        .contact-button {
+            background-color: #ffc800;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            padding: 8px 12px 6px;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+
+        .contact-button-text {
+            font-family: 'Outfit', 'Noto Sans', sans-serif;
+            font-weight: bold;
+            font-size: 14px;
+            color: #2c2825;
+            text-transform: uppercase;
+            letter-spacing: 0.28px;
+            white-space: nowrap;
+            text-decoration: underline;
+            text-underline-position: from-font;
+        }
+
+        /* Адаптивность */
+        /* Мобильные стили */
+        @media (max-width: 799px) {
+            .nav-desktop, .nav-tablet {
+                display: none;
+            }
+
+            .nav-mobile {
+                display: block;
+            }
+
+            .gallery-content {
+                grid-template-columns: 1fr;
+            }
+
+            .service-module {
+                flex-direction: column;
+            }
+
+            .service-text h3 {
+                font-size: 36px;
+            }
+
+            .try-section {
+                padding: 80px 0;
+            }
+
+            .try-section h3 {
+                font-size: 32px;
+            }
+        }
+
+        /* Планшетные стили */
+        @media (min-width: 800px) and (max-width: 1279px) {
+            .nav-desktop, .nav-mobile {
+                display: none;
+            }
+
+            .nav-tablet {
+                display: block;
+            }
+
+            .nav-items {
+                gap: 30px;
+            }
+
+            .gallery-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .service-text h3 {
+                font-size: 42px;
+            }
+        }
+
+        /* Десктопные стили */
+        @media (min-width: 1280px) {
+            .nav-tablet, .nav-mobile {
+                display: none;
+            }
+
+            .nav-desktop {
+                display: block;
+            }
+
+            .gallery-content {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            main {
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Десктопная навигация -->
+    <nav class="nav nav-desktop">
+        <div class="nav-content">
+            <a href="/" class="logo">SWANKY_FLOWERS</a>
+            <div class="nav-items">
+                <a href="/gallery">ГАЛЕРЕЯ</a>
+                <a href="/corsina" class="contact">СВЯЗАТЬСЯ</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Планшетная навигация -->
+    <nav class="nav nav-tablet">
+        <div class="nav-content">
+            <a href="/" class="logo">SWANKY_FLOWERS</a>
+            <div class="nav-items">
+                <a href="/gallery">ГАЛЕРЕЯ</a>
+                <a href="/corsina" class="contact">СВЯЗАТЬСЯ</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Мобильная навигация -->
+    <nav class="nav-mobile">
+        <div class="nav-mobile-content">
+            <div class="mobile-header">
+                <p class="mobile-logo">SWANKY_FLOWERS</p>
+                <button class="mobile-hamburger" aria-label="Hamburger menu">
+                    <span class="hamburger-line-mobile"></span>
+                    <span class="hamburger-line-mobile"></span>
+                    <span class="hamburger-line-mobile"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Основной контент -->
+    <main>
+        <!-- Галерея продуктов -->
+        <section class="gallery">
+            <h2 class="section-title">СЕЗОННЫЕ ПРЕДЛОЖЕНИЯ</h2>
+            <div class="gallery-content">
+                <!-- Продукт 1 -->
+                <div class="gallery-item">
+                    <div class="product-info">
+                        <p class="product-name">Dawn Bloom</p>
+                        <p class="product-price">$55/Bunch</p>
+                    </div>
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1563241527-3004b7be0ffd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Sun flowers">
+                    </div>
+                    <a href="/corsina" class="product-button">
+                        <div class="dot"></div>
+                        <p class="button-text">ПОЛУЧИТЬ</p>
+                    </a>
+                </div>
+
+                <!-- Продукт 2 -->
+                <div class="gallery-item">
+                    <div class="product-info">
+                        <p class="product-name">Solstice Stems</p>
+                        <p class="product-price">$30/Bunch</p>
+                    </div>
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1574263867128-a3d5c1b1deae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Bouquette of lilies and carnations">
+                    </div>
+                    <a href="/corsina" class="product-button">
+                        <div class="dot"></div>
+                        <p class="button-text">ПОЛУЧИТЬ</p>
+                    </a>
+                </div>
+
+                <!-- Продукт 3 -->
+                <div class="gallery-item">
+                    <div class="product-info">
+                        <p class="product-name">Whisper GreenS</p>
+                        <p class="product-price">$120/Bunch</p>
+                    </div>
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1563241527-3004b7be0ffd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Bouquette of tulips">
+                    </div>
+                    <a href="/corsina" class="product-button">
+                        <div class="dot"></div>
+                        <p class="button-text">ПОЛУЧИТЬ</p>
+                    </a>
+                </div>
+
+                <!-- Продукт 4 -->
+                <div class="gallery-item">
+                    <div class="product-info">
+                        <p class="product-name">Clarity PetalS</p>
+                        <p class="product-price">$55/Bunch</p>
+                    </div>
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1574263867128-a3d5c1b1deae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Pink flowers">
+                    </div>
+                    <a href="/corsina" class="product-button">
+                        <div class="dot"></div>
+                        <p class="button-text">ПОЛУЧИТЬ</p>
+                    </a>
+                </div>
+
+                <!-- Продукт 5 -->
+                <div class="gallery-item">
+                    <div class="product-info">
+                        <p class="product-name">River Stone</p>
+                        <p class="product-price">$30/Bunch</p>
+                    </div>
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1563241527-3004b7be0ffd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Bouquette of peonies">
+                    </div>
+                    <a href="/corsina" class="product-button">
+                        <div class="dot"></div>
+                        <p class="button-text">ПОЛУЧИТЬ</p>
+                    </a>
+                </div>
+
+                <!-- Продукт 6 -->
+                <div class="gallery-item">
+                    <div class="product-info">
+                        <p class="product-name">Moonlit Meadow</p>
+                        <p class="product-price">$120/Bunch</p>
+                    </div>
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1574263867128-a3d5c1b1deae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Bouquette of lilies and carnations">
+                    </div>
+                    <a href="/corsina" class="product-button">
+                        <div class="dot"></div>
+                        <p class="button-text">ПОЛУЧИТЬ</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Услуги -->
+        <section class="services">
+            <h2 class="section-title">УСЛУГИ</h2>
+            <div class="services-content">
+                <!-- Услуга 1 -->
+                <div class="service-module">
+                    <div class="service-text">
+                        <h3>ЗЕЛЕНЫЕ ИНСТАЛЛЯЦИИ</h3>
+                    </div>
+                    <div class="service-image">
+                        <img src="https://images.unsplash.com/photo-1563241527-3004b7be0ffd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Person making Bouquette">
+                    </div>
+                </div>
+
+                <!-- Услуга 2 -->
+                <div class="service-module">
+                    <div class="service-text">
+                        <h3>КАСТОМНЫЕ БУКЕТЫ</h3>
+                    </div>
+                    <div class="service-image">
+                        <img src="https://images.unsplash.com/photo-1574263867128-a3d5c1b1deae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Pink tulips">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Секция "Попробуйте" -->
+        <section class="try-section">
+            <h2>ПОПРОБУЙТЕ</h2>
+            <h3>ОТКРОЙТЕ ДЛЯ СЕБЯ МАГИЮ, КОТОРУЮ МЫ ВНЕСЕМ В ВАШЕ ВАЖНОЕ СОБЫТИЕ.</h3>
+            <a href="/corsina" class="contact-button">
+                <div class="dot"></div>
+                <p class="contact-button-text">СВЯЗАТЬСЯ</p>
+            </a>
+        </section>
+    </main>
+
+    <script>
+        // Простая реализация мобильного меню
+        document.querySelector('.mobile-hamburger').addEventListener('click', function() {
+            // Здесь можно добавить логику открытия/закрытия мобильного меню
+            alert('Мобильное меню открыто!');
+        });
+
+        // Адаптивность на основе ширины экрана
+        function handleResize() {
+            // В реальном приложении здесь может быть логика переключения между версиями
+            // В нашем случае это уже реализовано через CSS медиа-запросы
+        }
+
+        window.addEventListener('resize', handleResize);
+        handleResize(); // Вызов при загрузке
+    </script>
+</body>
+</html>
