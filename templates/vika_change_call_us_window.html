@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWANKY_FLOWERS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans', sans-serif;
+            background-color: #f5f5f5;
+            color: #2c2825;
+            line-height: 1.4;
+        }
+
+        /* Навигация */
+        .nav {
+            background-color: white;
+            position: relative;
+            width: 100%;
+        }
+
+        .nav::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background-color: #595959;
+            pointer-events: none;
+        }
+
+        .nav-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            position: relative;
+            width: 100%;
+        }
+
+        .logo {
+            font-family: 'Caprasimo', 'Noto Sans', sans-serif;
+            font-size: 15px;
+            color: #2c2825;
+            text-decoration: none;
+            letter-spacing: -0.45px;
+            white-space: pre;
+            line-height: 0.8;
+        }
+
+        .nav-items {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            font-family: 'Outfit', 'Noto Sans', sans-serif;
+            font-weight: bold;
+            font-size: 14px;
+            color: #2c2825;
+            text-transform: uppercase;
+            letter-spacing: 0.28px;
+            white-space: nowrap;
+        }
+
+        .nav-items a {
+            color: #2c2825;
+            text-decoration: none;
+            line-height: 1.4;
+        }
+
+        .nav-items a.contact {
+            text-decoration: underline;
+            text-underline-position: from-font;
+        }
+
+        /* Мобильная навигация */
+        .nav-mobile {
+            background-color: white;
+            position: relative;
+            width: 100%;
+        }
+
+        .nav-mobile::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background-color: #595959;
+            pointer-events: none;
+        }
+
+        .nav-mobile-content {
+            display: flex;
+            flex-direction: column;
+            gap: 81px;
+            align-items: flex-start;
+            padding: 20px 16px;
+            width: 100%;
+        }
+
+        .mobile-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .mobile-logo {
+            font-family: 'Caprasimo', sans-serif;
+            font-size: 16px;
+            color: #2c2825;
+            text-decoration: none;
+            letter-spacing: -0.48px;
+            line-height: 0.92;
+            width: 173px;
+        }
+
+        .mobile-hamburger {
+            width: 30px;
+            height: 30px;
+            position: relative;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+
+        .hamburger-line {
+            position: absolute;
+            height: 2px;
+            width: 75%;
+            background-color: #000;
+            left: 12.5%;
+            transform-origin: center;
+        }
+
+        .hamburger-line:nth-child(1) {
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .hamburger-line:nth-child(2) {
+            top: 25%;
+        }
+
+        .hamburger-line:nth-child(3) {
+            bottom: 25%;
+        }
+
+        /* Основной контент */
+        .main-content {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            gap: 60px;
+            align-items: flex-start;
+        }
+
+        .contact-form {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .image-section {
+            flex: 1;
+        }
+
+        /* Заголовок */
+        .title-section {
+            margin-bottom: 40px;
+        }
+
+        .title {
+            font-family: 'Outfit', 'Noto Sans', sans-serif;
+            font-weight: bold;
+            font-size: 50px;
+            color: #171615;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            line-height: 1.4;
+            width: 100%;
+        }
+
+        /* Поля ввода */
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .input-label {
+            font-family: 'Outfit', 'Noto Sans', sans-serif;
+            font-weight: bold;
+            font-size: 14px;
+            color: #2c2825;
+            text-transform: uppercase;
+            letter-spacing: 0.28px;
+            line-height: 1.4;
+        }
+
+        .text-input {
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Noto Sans', sans-serif;
+            font-size: 16px;
+            color: #2c2825;
+            background-color: white;
+            transition: border-color 0.3s ease;
+            max-width: 400px;
+        }
+
+        .text-input:focus {
+            outline: none;
+            border-color: #ffc800;
+        }
+
+        /* Изображение */
+        .contact-image {
+            width: 100%;
+            height: 500px;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+
+        .contact-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Кнопка отправки */
+        .submit-button {
+            background-color: #ffc800;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-family: 'Outfit', 'Noto Sans', sans-serif;
+            font-weight: bold;
+            font-size: 14px;
+            color: #2c2825;
+            text-transform: uppercase;
+            letter-spacing: 0.28px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            max-width: 200px;
+            margin-top: 20px;
+        }
+
+        .submit-button:hover {
+            background-color: #e6b400;
+        }
+
+        /* Адаптивность */
+        /* Мобильные стили */
+        @media (max-width: 799px) {
+            .nav-desktop, .nav-tablet {
+                display: none;
+            }
+
+            .nav-mobile {
+                display: block;
+            }
+
+            .title-desktop, .title-tablet {
+                display: none;
+            }
+
+            .title-mobile {
+                display: block;
+            }
+
+            .title {
+                font-size: 36px;
+            }
+
+            .main-content {
+                flex-direction: column;
+                padding: 40px 20px;
+            }
+
+            .contact-image {
+                height: 300px;
+                border-radius: 41px;
+            }
+
+            .text-input {
+                max-width: 100%;
+            }
+        }
+
+        /* Планшетные стили */
+        @media (min-width: 800px) and (max-width: 1279px) {
+            .nav-desktop, .nav-mobile {
+                display: none;
+            }
+
+            .nav-tablet {
+                display: block;
+            }
+
+            .nav-items {
+                gap: 30px;
+            }
+
+            .title-desktop, .title-mobile {
+                display: none;
+            }
+
+            .title-tablet {
+                display: block;
+            }
+
+            .title {
+                font-size: 42px;
+            }
+
+            .main-content {
+                flex-direction: column;
+                padding: 50px 20px;
+            }
+
+            .contact-image {
+                height: 400px;
+                border-radius: 41px;
+            }
+        }
+
+        /* Десктопные стили */
+        @media (min-width: 1280px) {
+            .nav-tablet, .nav-mobile {
+                display: none;
+            }
+
+            .nav-desktop {
+                display: block;
+            }
+
+            .title-tablet, .title-mobile {
+                display: none;
+            }
+
+            .title-desktop {
+                display: block;
+            }
+
+            .main-content {
+                flex-direction: row;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Десктопная навигация -->
+    <nav class="nav nav-desktop">
+        <div class="nav-content">
+            <a href="/" class="logo">SWANKY_FLOWERS</a>
+            <div class="nav-items">
+                <a href="/gallery">ГАЛЕРЕЯ</a>
+                <a href="/corsina" class="contact">СВЯЗАТЬСЯ</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Планшетная навигация -->
+    <nav class="nav nav-tablet">
+        <div class="nav-content">
+            <a href="/" class="logo">SWANKY_FLOWERS</a>
+            <div class="nav-items">
+                <a href="/gallery">ГАЛЕРЕЯ</a>
+                <a href="/corsina" class="contact">СВЯЗАТЬСЯ</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Мобильная навигация -->
+    <nav class="nav-mobile">
+        <div class="nav-mobile-content">
+            <div class="mobile-header">
+                <a href="/" class="mobile-logo">SWANKY_FLOWERS</a>
+                <button class="mobile-hamburger" aria-label="Hamburger menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Основной контент -->
+    <div class="main-content">
+        <!-- Левая часть - форма -->
+        <div class="contact-form">
+            <!-- Заголовок для десктопной версии -->
+            <div class="title-section title-desktop">
+                <h1 class="title">СВЯЖИТЕСЬ С НАМИ ДЛЯ ПОКУПКИ</h1>
+            </div>
+
+            <!-- Заголовок для планшетной версии -->
+            <div class="title-section title-tablet">
+                <h1 class="title">СВЯЖИТЕСЬ С НАМИ ДЛЯ ПОКУПКИ</h1>
+            </div>
+
+            <!-- Заголовок для мобильной версии -->
+            <div class="title-section title-mobile">
+                <h1 class="title">СВЯЖИТЕСЬ С НАМИ ДЛЯ ПОКУПКИ</h1>
+            </div>
+
+            <!-- Поле для имени -->
+            <div class="input-group">
+                <div class="input-label-desktop input-label-tablet input-label-mobile">
+                    Введите ваше имя
+                </div>
+                <input type="text" class="text-input" placeholder="Ваше имя">
+            </div>
+
+            <!-- Поле для телефона -->
+            <div class="input-group">
+                <div class="input-label-desktop input-label-tablet input-label-mobile">
+                    Введите ваш номер телефона
+                </div>
+                <input type="tel" class="text-input" placeholder="+7 (___)-___-__-__">
+            </div>
+
+            <button type="submit" class="submit-button">ОТПРАВИТЬ</button>
+        </div>
+
+        <!-- Правая часть - изображение -->
+        <div class="image-section">
+            <div class="contact-image">
+                <img src="https://images.unsplash.com/photo-1574263867128-a3d5c1b1deae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Person carrying flowers">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Простая реализация мобильного меню
+        document.querySelector('.mobile-hamburger').addEventListener('click', function() {
+            // Здесь можно добавить логику открытия/закрытия мобильного меню
+            alert('Мобильное меню открыто!');
+        });
+
+        // Адаптивность на основе ширины экрана
+        function handleResize() {
+            // В реальном приложении здесь может быть логика переключения между версиями
+            // В нашем случае это уже реализовано через CSS медиа-запросы
+        }
+
+        window.addEventListener('resize', handleResize);
+        handleResize(); // Вызов при загрузке
+    </script>
+</body>
+</html>
